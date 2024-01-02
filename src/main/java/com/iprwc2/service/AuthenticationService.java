@@ -1,5 +1,6 @@
 package com.iprwc2.service;
 
+import com.iprwc2.exception.UsernameAlreadyExistsException;
 import com.iprwc2.model.AuthenticationRequest;
 import com.iprwc2.model.RegisterRequest;
 import com.iprwc2.model.User;
@@ -29,9 +30,9 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
 
-//        if (repository.existsByUsername(request.getUsername())) {
-//            throw new UsernameAlreadyExistsException("Username already exists.");
-//        }
+        if (repository.existsByUsername(request.getUsername())) {
+            throw new UsernameAlreadyExistsException("Username already exists.");
+        }
 
         var user = User.builder()
                 .username(request.getUsername())

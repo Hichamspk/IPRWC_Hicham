@@ -21,7 +21,7 @@ public class DatabaseSeeder {
                 User adminUser = User.builder()
                         .username(adminUsername)
                         .password(passwordEncoder.encode(adminPassword))
-                        .name("Admin User") // Of een andere naam naar keuze
+                        .name("Admin") // Of een andere naam naar keuze
                         .rights(Rights.ADMIN) // Zorg ervoor dat 'Rights' de juiste enum bevat
                         .build();
                 userRepository.save(adminUser);
