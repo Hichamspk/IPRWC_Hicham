@@ -24,8 +24,5 @@ public class Product {
     private BigDecimal price;
     private int stock;
     private String imageUrl;
-    private LocalDate releaseDate;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 }

@@ -30,15 +30,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/api/v1/auth/**")
+                        req.requestMatchers("/api/v1/auth/**", "/api/v1/products")
                                 .permitAll()
-                                .requestMatchers(GET, "api/attendanceList").hasAnyAuthority("SENSEI", "ADMIN")
-                                .requestMatchers(POST, "api/attendanceList").hasAnyAuthority("SENSEI", "ADMIN")
-                                .requestMatchers(POST, "api/curriculum").hasAnyAuthority("SENSEI", "ADMIN")
-                                .requestMatchers(POST, "api/dojo").hasAnyAuthority("ADMIN")
-                                .requestMatchers(POST, "api/exercise").hasAnyAuthority("SENSEI", "ADMIN")
-                                .requestMatchers(POST, "api/lesson").hasAnyAuthority("SENSEI", "ADMIN")
-                                .requestMatchers(DELETE, "api/curriculum/{curriculumId}").hasAnyAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -46,7 +39,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .apply(corsConfigurer()); // Apply CORS configuration
+                .apply(corsConfigurer());
 
 
         return http.build();
