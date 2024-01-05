@@ -28,6 +28,10 @@ public class User implements UserDetails {
         this.rights = rights;
     }
 
+    public Rights getRights() {
+        return rights;
+    }
+
     @Override
     public String getUsername() {
         return username;
