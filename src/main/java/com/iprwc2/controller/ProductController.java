@@ -44,7 +44,7 @@ public class ProductController {
     @ResponseBody
     public ApiResponse addProduct(@RequestBody Product newProduct){
         Product product = this.productDao.addProduct(newProduct);
-        return new ApiResponse(HttpStatus.ACCEPTED, product);
+        return new ApiResponse(HttpStatus.OK, product);
     }
 
     @RequestMapping(method = RequestMethod.GET)

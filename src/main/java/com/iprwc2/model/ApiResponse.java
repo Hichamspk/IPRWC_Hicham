@@ -12,7 +12,7 @@ public class ApiResponse<Type> {
 
     public ApiResponse(HttpStatus code, Type payload) {
         this.code = code;
-        if (code == HttpStatus.ACCEPTED) {
+        if (code == HttpStatus.OK) {
             this.payload = payload;
         }
     }
