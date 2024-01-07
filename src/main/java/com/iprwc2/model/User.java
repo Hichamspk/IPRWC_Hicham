@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -23,6 +25,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rights rights;
 
+
     public User(String name, Rights rights) {
         this.name = name;
         this.rights = rights;
@@ -33,6 +36,12 @@ public class User implements UserDetails {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new RightsAuthority(this.rights));
+    }
+
+
+    @Override
     public String getUsername() {
         return username;
     }
@@ -41,10 +50,6 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null; // Implementeer naar behoefte
-    }
 
     @Override
     public boolean isAccountNonExpired() {
