@@ -17,9 +17,8 @@ import java.util.Collections;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long ID;
-
-    private String username;
+    private Long id;
+    private String email;
     private String password;
     private String name;
     @Enumerated(EnumType.STRING)
@@ -41,14 +40,10 @@ public class User implements UserDetails {
     }
 
 
-    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
 
     @Override
@@ -73,6 +68,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" + "ID=" + ID + ", username='" + username + '\'' + ", name='" + name + '\'' + ", rights=" + rights + '}';
+        return "User{" + "ID=" + id + ", username='" + email + '\'' + ", name='" + name + '\'' + ", rights=" + rights + '}';
     }
 }

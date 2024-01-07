@@ -12,9 +12,6 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
-    // Add any other properties or relationships as needed
 }
 

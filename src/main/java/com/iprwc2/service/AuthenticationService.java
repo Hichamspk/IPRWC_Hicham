@@ -30,12 +30,12 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
 
-        if (repository.existsByUsername(request.getUsername())) {
+        if (repository.existsByEmail(request.getUsername())) {
             throw new UsernameAlreadyExistsException("Username already exists.");
         }
 
         var user = User.builder()
-                .username(request.getUsername())
+                .email(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .rights(request.getRights())
@@ -56,7 +56,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByUsername(request.getUsername())
+        var user = repository.findByEmail(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -79,7 +79,7 @@ public class AuthenticationService {
         refreshToken = authHeader.substring(7);
         userName = jwtService.extractUsername(refreshToken);
         if (userName != null) {
-            var user  = this.repository.findByUsername(userName).
+            var user  = this.repository.findByEmail(userName).
                     orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accesToken = jwtService.generateToken(user);

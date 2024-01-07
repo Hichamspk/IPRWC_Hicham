@@ -17,9 +17,9 @@ public class DatabaseSeeder {
             String adminUsername = "admin"; // Voer hier de gewenste gebruikersnaam in
             String adminPassword = "admin123"; // Voer hier het gewenste wachtwoord in
 
-            if (userRepository.findByUsername(adminUsername).isEmpty()) {
+            if (userRepository.findByEmail(adminUsername).isEmpty()) {
                 User adminUser = User.builder()
-                        .username(adminUsername)
+                        .email(adminUsername)
                         .password(passwordEncoder.encode(adminPassword))
                         .name("Admin") // Of een andere naam naar keuze
                         .rights(Rights.ADMIN) // Zorg ervoor dat 'Rights' de juiste enum bevat
