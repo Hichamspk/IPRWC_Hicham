@@ -7,6 +7,7 @@ import com.iprwc2.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iprwc2.model.AuthenticationResponse;
 import com.iprwc2.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
-
+    public void register(RegisterRequest request, HttpServletResponse response) {
         if (repository.existsByEmail(request.getUsername())) {
             throw new UsernameAlreadyExistsException("Username already exists.");
         }
@@ -41,55 +41,81 @@ public class AuthenticationService {
                 .rights(request.getRights())
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        setTokensInCookies(user, response);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public void authenticate(AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getUsername())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        var user = repository.findByEmail(request.getUsername()).orElseThrow();
+        setTokensInCookies(user, response);
     }
 
-    public void  refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userName;
-        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+    private void setTokensInCookies(User user, HttpServletResponse response) {
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+
+        Cookie jwtTokenCookie = new Cookie("jwt-token", jwtToken);
+        jwtTokenCookie.setHttpOnly(true);
+        jwtTokenCookie.setPath("/");
+        response.addCookie(jwtTokenCookie);
+
+        Cookie refreshTokenCookie = new Cookie("refresh-token", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setPath("/");
+        response.addCookie(refreshTokenCookie);
+    }
+
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String refreshToken = extractCookieValue(request, "refresh-token");
+
+        if (refreshToken == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No refresh token in cookies");
             return;
         }
-        refreshToken = authHeader.substring(7);
-        userName = jwtService.extractUsername(refreshToken);
+
+        final String userName = jwtService.extractUsername(refreshToken);
         if (userName != null) {
-            var user  = this.repository.findByEmail(userName).
-                    orElseThrow();
+            var user = this.repository.findByEmail(userName).orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
-                var accesToken = jwtService.generateToken(user);
+                var accessToken = generateAccessToken(user);
+                addCookieToResponse(response, "jwt-token", accessToken);
+
                 var authResponse = AuthenticationResponse.builder()
-                        .token(accesToken)
+                        .token(accessToken)
                         .refreshToken(refreshToken)
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
-
     }
+
+    private String extractCookieValue(HttpServletRequest request, String cookieName) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookieName.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    private void addCookieToResponse(HttpServletResponse response, String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
+    private String generateAccessToken(User user) {
+        return jwtService.generateToken(user);
+    }
+
+
 }
+

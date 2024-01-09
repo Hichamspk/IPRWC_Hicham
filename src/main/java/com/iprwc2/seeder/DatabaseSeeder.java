@@ -14,21 +14,40 @@ public class DatabaseSeeder {
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            String adminUsername = "admin"; // Voer hier de gewenste gebruikersnaam in
-            String adminPassword = "admin123"; // Voer hier het gewenste wachtwoord in
+            // Admin User Setup
+            String adminUsername = "admin"; // Admin username
+            String adminPassword = "admin123"; // Admin password
 
             if (userRepository.findByEmail(adminUsername).isEmpty()) {
                 User adminUser = User.builder()
                         .email(adminUsername)
                         .password(passwordEncoder.encode(adminPassword))
-                        .name("Admin") // Of een andere naam naar keuze
-                        .rights(Rights.ADMIN) // Zorg ervoor dat 'Rights' de juiste enum bevat
+                        .name("Admin")
+                        .rights(Rights.ADMIN)
                         .build();
                 userRepository.save(adminUser);
                 System.out.println("Admin account created");
             } else {
                 System.out.println("Admin account already exists");
             }
+
+            // Regular User Setup
+            String regularUsername = "user"; // Regular user username
+            String regularPassword = "user123"; // Regular user password
+
+            if (userRepository.findByEmail(regularUsername).isEmpty()) {
+                User regularUser = User.builder()
+                        .email(regularUsername)
+                        .password(passwordEncoder.encode(regularPassword))
+                        .name("Regular User")
+                        .rights(Rights.USER) // Assuming 'USER' is a valid enum for regular users
+                        .build();
+                userRepository.save(regularUser);
+                System.out.println("Regular user account created");
+            } else {
+                System.out.println("Regular user account already exists");
+            }
         };
     }
 }
+

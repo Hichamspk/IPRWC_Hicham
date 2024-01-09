@@ -5,6 +5,7 @@ import com.iprwc2.model.AuthenticationRequest;
 import com.iprwc2.model.AuthenticationResponse;
 import com.iprwc2.model.RegisterRequest;
 import com.iprwc2.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,18 +23,23 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+    public ResponseEntity<?> register(
+            @RequestBody RegisterRequest request,
+            HttpServletResponse response
     ){
-        return ResponseEntity.ok(service.register(request));
+        service.register(request, response);
+        return ResponseEntity.ok().build(); // Sending an empty response body
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+    public ResponseEntity<?> authenticate(
+            @RequestBody AuthenticationRequest request,
+            HttpServletResponse response
     ){
-        return ResponseEntity.ok(service.authenticate(request));
+        service.authenticate(request, response);
+        return ResponseEntity.ok().build(); // Sending an empty response body
     }
 
     @PostMapping("/refresh-token")
@@ -44,4 +50,3 @@ public class AuthenticationController {
         service.refreshToken(request, response);
     }
 }
-
