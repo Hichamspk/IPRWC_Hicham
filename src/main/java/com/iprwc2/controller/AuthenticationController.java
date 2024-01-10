@@ -30,17 +30,18 @@ public class AuthenticationController {
             HttpServletResponse response
     ){
         service.register(request, response);
-        return ResponseEntity.ok().build(); // Sending an empty response body
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ){
-        service.authenticate(request, response);
-        return ResponseEntity.ok().build(); // Sending an empty response body
+        AuthenticationResponse authResponse = service.authenticate(request, response);
+        return ResponseEntity.ok(authResponse);
     }
+
 
     @PostMapping("/refresh-token")
     public void refreshToken(

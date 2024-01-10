@@ -13,14 +13,23 @@ public class ProductDao {
     @Autowired
     private ProductRepository productRepository;
 
-
     public Product addProduct(Product newProduct) {
-        Product product = this.productRepository.save(newProduct);
-        return product;
+        return productRepository.save(newProduct);
     }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
+    public Product updateProduct(Long id, Product productDetails) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    return productRepository.save(product);
+                })
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 }
