@@ -8,10 +8,7 @@ import com.iprwc2.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,14 @@ public class CategoryController {
         List<Category> categories = categoryDao.getAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+        Category newCategory = categoryDao.addCategory(category);
+        return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
+    }
+
+
 }
 

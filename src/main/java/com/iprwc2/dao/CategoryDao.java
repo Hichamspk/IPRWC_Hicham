@@ -18,4 +18,8 @@ public class CategoryDao {
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
+
+    public Category addCategory(Category category) {
+        return categoryRepository.save(category);
+    }
 }
