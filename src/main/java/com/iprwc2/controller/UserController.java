@@ -1,15 +1,11 @@
 package com.iprwc2.controller;
 
 import com.iprwc2.dao.UserDao;
-import com.iprwc2.model.UserProjection;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import com.iprwc2.DTO.UserProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")

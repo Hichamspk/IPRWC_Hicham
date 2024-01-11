@@ -1,7 +1,7 @@
 package com.iprwc2.repository;
 
 import com.iprwc2.model.User;
-import com.iprwc2.model.UserProjection;
+import com.iprwc2.DTO.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
