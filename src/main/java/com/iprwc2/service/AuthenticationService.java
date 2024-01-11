@@ -1,5 +1,6 @@
 package com.iprwc2.service;
 
+import com.iprwc2.DTO.*;
 import com.iprwc2.exception.UsernameAlreadyExistsException;
 import com.iprwc2.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +9,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -77,6 +77,17 @@ public class AuthenticationService {
         userIdCookie.setMaxAge(86400);
         userIdCookie.setPath("/");
         response.addCookie(userIdCookie);
+    }
+
+    public void registerUser(UserRegistrationRequest request, HttpServletResponse response) {
+        // Create a new user with the "USER" rights and other details from the request
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setUsername(request.getEmail());
+        registerRequest.setPassword(request.getPassword());
+        registerRequest.setName(request.getName());
+        registerRequest.setRights(Rights.USER);
+
+        register(registerRequest, response);
     }
 
 

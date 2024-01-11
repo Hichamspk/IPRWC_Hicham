@@ -14,9 +14,11 @@ public class DatabaseSeeder {
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Admin User Setup
-            String adminUsername = "admin"; // Admin username
-            String adminPassword = "admin123"; // Admin password
+            String adminUsername = "admin";
+            String adminPassword = "admin123";
+            String postalCode =  "1234AB";
+            String street = "straat 48";
+            String city = "City";
 
             if (userRepository.findByEmail(adminUsername).isEmpty()) {
                 User adminUser = User.builder()
@@ -24,6 +26,9 @@ public class DatabaseSeeder {
                         .password(passwordEncoder.encode(adminPassword))
                         .name("Admin")
                         .rights(Rights.ADMIN)
+                        .postalCode(postalCode)
+                        .street(street)
+                        .city(city)
                         .build();
                 userRepository.save(adminUser);
                 System.out.println("Admin account created");
@@ -31,7 +36,6 @@ public class DatabaseSeeder {
                 System.out.println("Admin account already exists");
             }
 
-            // Regular User Setup
             String regularUsername = "user"; // Regular user username
             String regularPassword = "user123"; // Regular user password
 
@@ -40,7 +44,10 @@ public class DatabaseSeeder {
                         .email(regularUsername)
                         .password(passwordEncoder.encode(regularPassword))
                         .name("Regular User")
-                        .rights(Rights.USER) // Assuming 'USER' is a valid enum for regular users
+                        .rights(Rights.USER)
+                        .postalCode(postalCode)
+                        .street(street)
+                        .city(city)
                         .build();
                 userRepository.save(regularUser);
                 System.out.println("Regular user account created");

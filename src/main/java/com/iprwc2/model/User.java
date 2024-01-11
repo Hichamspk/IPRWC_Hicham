@@ -23,6 +23,9 @@ public class User implements UserDetails {
     private String name;
     @Enumerated(EnumType.STRING)
     private Rights rights;
+    private String city;
+    private String street;
+    private String postalCode;
 
 
     public User(String name, Rights rights) {
@@ -48,22 +51,22 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // Pas aan naar je logica
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // Pas aan naar je logica
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // Pas aan naar je logica
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return true; // Pas aan naar je logica
+        return true;
     }
 
     @Override

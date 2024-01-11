@@ -1,11 +1,11 @@
 package com.iprwc2.controller;
 
 
-import com.iprwc2.model.AuthenticationRequest;
-import com.iprwc2.model.AuthenticationResponse;
-import com.iprwc2.model.RegisterRequest;
+import com.iprwc2.DTO.AuthenticationRequest;
+import com.iprwc2.DTO.AuthenticationResponse;
+import com.iprwc2.DTO.RegisterRequest;
+import com.iprwc2.DTO.UserRegistrationRequest;
 import com.iprwc2.service.AuthenticationService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -50,4 +50,14 @@ public class AuthenticationController {
     ) throws IOException {
         service.refreshToken(request, response);
     }
+
+    @PostMapping("/register-user")
+    public ResponseEntity<?> registerUser(
+            @RequestBody UserRegistrationRequest request,
+            HttpServletResponse response
+    ){
+        service.registerUser(request, response);
+        return ResponseEntity.ok().build();
+    }
+
 }

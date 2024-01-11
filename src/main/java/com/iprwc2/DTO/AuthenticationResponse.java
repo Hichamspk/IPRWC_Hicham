@@ -1,4 +1,4 @@
-package com.iprwc2.model;
+package com.iprwc2.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RefreshResponse {
-    private String token;
-    private String refreshToken;
+public class AuthenticationResponse {
     private Long id;
 }
 

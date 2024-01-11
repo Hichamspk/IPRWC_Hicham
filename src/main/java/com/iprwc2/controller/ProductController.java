@@ -2,8 +2,7 @@ package com.iprwc2.controller;
 
 import com.iprwc2.DTO.ProductDTO;
 import com.iprwc2.dao.ProductDao;
-import com.iprwc2.model.ApiResponse;
-import com.iprwc2.model.AuthenticationResponse;
+import com.iprwc2.DTO.ApiResponse;
 import com.iprwc2.model.Category;
 import com.iprwc2.model.Product;
 import com.iprwc2.repository.ProductRepository;

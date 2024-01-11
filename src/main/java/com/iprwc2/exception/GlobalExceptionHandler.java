@@ -1,9 +1,8 @@
 package com.iprwc2.exception;
 
 
-import com.iprwc2.model.ApiResponse;
+import com.iprwc2.DTO.ApiResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
