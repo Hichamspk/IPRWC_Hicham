@@ -36,6 +36,9 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .rights(request.getRights())
+                .postalCode(request.getPostalcode())
+                .city(request.getCity())
+                .street(request.getStreet())
                 .build();
         repository.save(user);
         setTokensInCookies(user, response);
@@ -80,12 +83,14 @@ public class AuthenticationService {
     }
 
     public void registerUser(UserRegistrationRequest request, HttpServletResponse response) {
-        // Create a new user with the "USER" rights and other details from the request
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setUsername(request.getEmail());
         registerRequest.setPassword(request.getPassword());
         registerRequest.setName(request.getName());
         registerRequest.setRights(Rights.USER);
+        registerRequest.setStreet(request.getStreet());
+        registerRequest.setCity(request.getCity());
+        registerRequest.setPostalcode(request.getPostalcode());
 
         register(registerRequest, response);
     }

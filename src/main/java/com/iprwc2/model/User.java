@@ -1,5 +1,6 @@
 package com.iprwc2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String email;
+    @JsonIgnore
     private String password;
     private String name;
     @Enumerated(EnumType.STRING)
@@ -33,11 +35,13 @@ public class User implements UserDetails {
         this.rights = rights;
     }
 
+    @JsonIgnore
     public Rights getRights() {
         return rights;
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new RightsAuthority(this.rights));
     }
@@ -50,27 +54,27 @@ public class User implements UserDetails {
 
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "ID=" + id + ", username='" + email + '\'' + ", name='" + name + '\'' + ", rights=" + rights + '}';
-    }
 }

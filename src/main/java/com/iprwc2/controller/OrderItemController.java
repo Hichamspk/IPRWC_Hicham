@@ -30,7 +30,7 @@ public class OrderItemController {
     public ApiResponse<List<OrderItem>> getAllOrderItems() {
         try {
             List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orderItems);
+            return new ApiResponse<>(HttpStatus.OK, orderItems);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Could not fetch all order items");
         }
@@ -42,7 +42,7 @@ public class OrderItemController {
     public ApiResponse<Optional<OrderItem>> getOrderItemById(@PathVariable Long orderItemId) {
         try {
             Optional<OrderItem> orderItem = orderItemDao.getOrderItemById(orderItemId);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orderItem);
+            return new ApiResponse<>(HttpStatus.OK, orderItem);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Order item not found");
         }
@@ -54,7 +54,7 @@ public class OrderItemController {
     public ApiResponse<List<OrderItem>> getOrderItemsByOrderId(@PathVariable Long orderId) {
         try {
             List<OrderItem> orderItems = orderItemDao.getOrderItemsByOrderId(orderId);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orderItems);
+            return new ApiResponse<>(HttpStatus.OK, orderItems);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Order items not found for the given order ID");
         }
@@ -65,7 +65,7 @@ public class OrderItemController {
     public ApiResponse<OrderItem> placeNewOrderItem(@RequestBody OrderItem orderItemRequest) {
         try {
             OrderItem orderItem = orderItemDao.saveNewOrderItem(orderItemRequest);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orderItem);
+            return new ApiResponse<>(HttpStatus.OK, orderItem);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Couldn't place order item.");
         }
@@ -79,7 +79,7 @@ public class OrderItemController {
             @PathVariable Long orderItemId) {
         try {
             OrderItem orderItem = orderItemDao.updateOrderItem(orderItemRequest, orderItemId);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orderItem);
+            return new ApiResponse<>(HttpStatus.OK, orderItem);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Couldn't update order item.");
         }

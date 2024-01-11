@@ -15,4 +15,7 @@ public class UserRegistrationRequest {
     private String password;
     private String name;
     private Rights rights;
+    private String city;
+    private String street;
+    private String postalcode;
 }

@@ -17,5 +17,5 @@ public class RegisterRequest {
     private Rights rights;
     private String city;
     private String street;
-    private String postalCode;
+    private String postalcode;
 }

@@ -29,7 +29,7 @@ public class OrderController {
     ApiResponse<List<ShopOrder>> getAllOrders(){
         try {
             List<ShopOrder> shopOrders = this.orderDao.getAllOrders();
-            return new ApiResponse<>(HttpStatus.ACCEPTED, shopOrders);
+            return new ApiResponse<>(HttpStatus.OK, shopOrders);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Could not fetch all orders");
         }
@@ -41,7 +41,7 @@ public class OrderController {
     ApiResponse<Optional<ShopOrder>> getOrderBy(@PathVariable Long orderId) {
         try {
             Optional<ShopOrder> order = this.orderDao.getOrderById(orderId);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, order);
+            return new ApiResponse<>(HttpStatus.OK, order);
         } catch (Exception e){
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Order not found");
         }
@@ -55,7 +55,7 @@ public class OrderController {
     ){
         try {
             ShopOrder order = this.orderDao.saveNewOrder(shopOrderRequest);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, order);
+            return new ApiResponse<>(HttpStatus.OK, order);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Couldn't place order.");
         }
@@ -70,7 +70,7 @@ public class OrderController {
     ){
         try {
             ShopOrder order = this.orderDao.updateOrderStatus(shopOrderRequest, orderId);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, order);
+            return new ApiResponse<>(HttpStatus.OK, order);
         } catch (Exception e) {
             return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Couldn't place order.");
         }
@@ -81,7 +81,7 @@ public class OrderController {
     ApiResponse<List<ShopOrder>> getAllUserOrders(@PathVariable String email) {
         try {
             List<ShopOrder> orders = this.orderDao.getAllUserOrders(email);
-            return new ApiResponse<>(HttpStatus.ACCEPTED, orders);
+            return new ApiResponse<>(HttpStatus.OK, orders);
         } catch (Exception e){
             return new ApiResponse<>(HttpStatus.NOT_FOUND, "Orders not found");
         }
