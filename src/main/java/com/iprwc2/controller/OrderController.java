@@ -1,7 +1,7 @@
 package com.iprwc2.controller;
 
 import com.iprwc2.dao.OrderDao;
-import com.iprwc2.DTO.ApiResponse;
+import com.iprwc2.model.ApiResponse;
 import com.iprwc2.model.ShopOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

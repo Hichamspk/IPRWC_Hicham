@@ -22,4 +22,17 @@ public class CategoryDao {
     public Category addCategory(Category category) {
         return categoryRepository.save(category);
     }
+
+    public Category updateCategory(Long id, Category categoryDetails) {
+        return categoryRepository.findById(id)
+                .map(category -> {
+                    category.setName(categoryDetails.getName());
+                    return categoryRepository.save(category);
+                })
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + id));
+    }
+
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
 }

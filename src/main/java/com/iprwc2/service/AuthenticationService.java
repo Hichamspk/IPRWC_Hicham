@@ -1,6 +1,5 @@
 package com.iprwc2.service;
 
-import com.iprwc2.DTO.*;
 import com.iprwc2.exception.UsernameAlreadyExistsException;
 import com.iprwc2.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;

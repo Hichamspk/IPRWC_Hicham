@@ -1,4 +1,4 @@
-package com.iprwc2.DTO;
+package com.iprwc2.model;
 
 public interface UserProjection {
     String getEmail();

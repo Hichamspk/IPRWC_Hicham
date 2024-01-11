@@ -1,4 +1,4 @@
-package com.iprwc2.DTO;
+package com.iprwc2.model;
 
 import com.iprwc2.model.Rights;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegistrationRequest {
-    private String email;
+public class RegisterRequest {
+    private String username;
     private String password;
     private String name;
     private Rights rights;

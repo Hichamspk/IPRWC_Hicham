@@ -32,6 +32,18 @@ public class CategoryController {
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
+        Category updatedCategory = categoryDao.updateCategory(id, categoryDetails);
+        return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        categoryDao.deleteCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 }
 

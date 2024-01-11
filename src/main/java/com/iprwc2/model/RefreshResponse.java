@@ -1,4 +1,4 @@
-package com.iprwc2.DTO;
+package com.iprwc2.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

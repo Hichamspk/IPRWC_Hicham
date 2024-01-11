@@ -1,7 +1,7 @@
 package com.iprwc2.controller;
 
 import com.iprwc2.dao.UserDao;
-import com.iprwc2.DTO.UserProjection;
+import com.iprwc2.model.UserProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

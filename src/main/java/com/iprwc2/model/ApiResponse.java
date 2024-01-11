@@ -1,4 +1,4 @@
-package com.iprwc2.DTO;
+package com.iprwc2.model;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,6 +1,6 @@
 package com.iprwc2.dao;
 
-import com.iprwc2.DTO.UserProjection;
+import com.iprwc2.model.UserProjection;
 import com.iprwc2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
