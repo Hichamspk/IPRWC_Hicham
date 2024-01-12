@@ -32,10 +32,18 @@ public class ProductDao {
                     product.setDescription(productDetails.getDescription());
                     product.setPrice(productDetails.getPrice());
                     product.setImageUrl(productDetails.getImageUrl());
+
+                    if (productDetails.getCategory() != null) {
+                        Category category = categoryRepository.findById(productDetails.getCategory().getId())
+                                .orElseThrow(() -> new RuntimeException("Category not found with id " + productDetails.getCategory().getId()));
+                        product.setCategory(category);
+                    }
+
                     return productRepository.save(product);
                 })
                 .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
     }
+
 
     public List<Product> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
