@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/v1/orders")
-//@CrossOrigin(origins = "*")
 public class OrderController {
 
     @Autowired
@@ -47,7 +46,7 @@ public class OrderController {
         }
     }
 
-    //Place a new order
+
     @RequestMapping(method = RequestMethod.POST, value = "/new-order")
     @ResponseBody
     public ApiResponse<ShopOrder> placeNewOrder(
